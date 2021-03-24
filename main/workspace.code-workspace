@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "G:\\Work"
+		},
+		{
+			"path": "c:\\Users\\Admin\\Downloads\\OpenServer\\domains"
+		},
+		{
+			"path": "..\\.."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Work_ssd"
+	}
+}
