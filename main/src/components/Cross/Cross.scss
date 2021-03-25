@@ -1,15 +1,28 @@
 .cross {
-  height: 50px;
-  width: 50px;
-  transform: rotate(45deg);
-  --border: 1px solid darkgreen;
-
-  &__line-1 {
-    border: var(--border);
+  //height: 50px;
+  //width: 50px;
+  height: 100%;
+  width: 100%;
+  //transform: rotate(45deg);
+  //--border: 2px solid #fffb00;
+  position: relative;
+  &__line-1,  {
+    //border: var(--border);
+    transform: rotate(-45deg);
+    width: 5px;
+    height: 100%;
+    background-color: yellow;
+    position: absolute;
+    left: 48%;
   }
 
   &__line-2 {
-    border: var(--border);
-    transform: rotate(90deg);
+    //border: var(--border);
+    transform: rotate(45deg);
+    width: 5px;
+    height: 100%;
+    background-color: yellow;
+    position: absolute;
+    left: 48%;
   }
 }

@@ -6,8 +6,24 @@ import "./Field.scss";
 
 const Field = () => {
   const [fieldsModel, updateModel] = React.useState(staticModel);
+  const [turn, changeTurn] = React.useState();
   const onCellClick = (id) => {
-    console.log(id);
+    // console.log(fieldsModel.map((x) => x.map((y) => y.id === id)));
+    if (turn) {
+      updateModel(
+        fieldsModel.map((x) =>
+          x.map((y) => (y.id === id ? { ...y, fig: "cross" } : y))
+        )
+      );
+      changeTurn(!turn);
+    } else {
+      updateModel(
+        fieldsModel.map((x) =>
+          x.map((y) => (y.id === id ? { ...y, fig: "circle" } : y))
+        )
+      );
+      changeTurn(!turn);
+    }
   };
 
   return (
