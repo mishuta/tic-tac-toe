@@ -1,42 +1,57 @@
 import React from "react";
 import { Cell } from "../../components/Cell/Cell";
-import { staticModel } from "./constants";
+import { cellModel, staticModel, winCombinations } from "./constants";
 
 import "./Field.scss";
 
 const Field = () => {
   const [fieldsModel, updateModel] = React.useState(staticModel);
-  const [turn, changeTurn] = React.useState();
-  const onCellClick = (id) => {
-    // console.log(fieldsModel.map((x) => x.map((y) => y.id === id)));
-    if (turn) {
-      updateModel(
-        fieldsModel.map((x) =>
-          x.map((y) => (y.id === id ? { ...y, fig: "cross" } : y))
-        )
-      );
-      changeTurn(!turn);
-    } else {
-      updateModel(
-        fieldsModel.map((x) =>
-          x.map((y) => (y.id === id ? { ...y, fig: "circle" } : y))
-        )
-      );
-      changeTurn(!turn);
+  const [turn, changeTurn] = React.useState(false);
+  const [isFinished, setIsFinished] = React.useState(false);
+
+  const xoFilter = (fig) => {
+    let result = "";
+    for (let prop in fieldsModel) {
+      if (fig === fieldsModel[prop]) {
+        result = result + prop;
+      }
     }
+    return result;
+  };
+
+  const checkWin = () => {
+    const circleResult = xoFilter("circle");
+    const checkCircleResult = winCombinations.some((combination) =>
+      circleResult.includes(combination)
+    );
+    const crossResult = xoFilter("cross");
+    const checkCrossResult = winCombinations.some((combination) =>
+      crossResult.includes(combination)
+    );
+    setIsFinished(checkCircleResult || checkCrossResult);
+  };
+
+  const onCellClick = (id) => {
+    if (fieldsModel[id] || isFinished) {
+      return;
+    }
+    fieldsModel[id] = turn ? "cross" : "circle";
+    updateModel(fieldsModel);
+    checkWin();
+    changeTurn(!turn);
   };
 
   return (
     <div className="field">
-      {fieldsModel.map((columnModel, columnIndex) => (
+      {cellModel.map((columnModel, columnIndex) => (
         <div className="field__column" key={columnIndex}>
-          {columnModel.map((figObj, figIndex) => (
+          {columnModel.map((cellId) => (
             <div
               className="field__cell"
-              key={figIndex}
-              onClick={() => onCellClick(figObj.id)}
+              key={cellId}
+              onClick={() => onCellClick(cellId)}
             >
-              <Cell figType={figObj.fig} />
+              <Cell figType={staticModel[cellId]} />
             </div>
           ))}
         </div>
